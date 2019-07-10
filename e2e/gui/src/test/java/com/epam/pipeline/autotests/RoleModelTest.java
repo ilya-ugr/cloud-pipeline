@@ -99,19 +99,24 @@ public class RoleModelTest
     }
 
     @Override
-    @AfterClass(alwaysRun = true)
+    @AfterClass(alwaysRun = true, dependsOnMethods = {"stopRuns"})
     public void removeNodes() {
-        logoutIfNeededAndPerform(() -> {
-            loginAs(admin);
+        loginAsAdminAndPerform(() -> {
             sleep(3, MINUTES);
             super.removeNodes();
         });
     }
 
+    @Override
+    @AfterClass(alwaysRun = true)
+    public void stopRuns() {
+        loginAsAdminAndPerform(super::stopRuns);
+    }
+
     @AfterClass(alwaysRun = true)
     public void tearDown() {
-        logoutIfNeededAndPerform(() -> {
-            loginAs(admin)
+        loginAsAdminAndPerform(() -> {
+            navigationMenu()
                     .library()
                     .cd(folderWithSeveralPipelines)
                     .removePipeline(firstOfTheSeveralPipelines)

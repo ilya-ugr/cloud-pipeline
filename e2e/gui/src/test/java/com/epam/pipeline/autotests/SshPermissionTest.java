@@ -56,21 +56,21 @@ public class SshPermissionTest extends AbstractSeveralPipelineRunningTest implem
     @Override
     @AfterClass(alwaysRun = true)
     public void removeNodes() {
-        logoutIfNeededAndPerform(() -> {
-            loginAs(admin);
+        loginAsAdminAndPerform(() -> {
             sleep(6, MINUTES);
             super.removeNodes();
         });
     }
 
+    @Override
+    @AfterClass(alwaysRun = true)
+    public void stopRuns() {
+        loginAsAdminAndPerform(super::stopRuns);
+    }
+
     @AfterClass(alwaysRun = true)
     public void tearDown() {
-        logoutIfNeededAndPerform(() -> {
-            loginAs(admin);
-            navigationMenu()
-                    .library()
-                    .removePipeline(pipelineName);
-        });
+        loginAsAdminAndPerform(() -> navigationMenu().library().removePipeline(pipelineName));
     }
 
     @Test
