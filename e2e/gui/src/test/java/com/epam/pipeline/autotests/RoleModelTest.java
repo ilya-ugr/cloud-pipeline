@@ -101,10 +101,8 @@ public class RoleModelTest
     @Override
     @AfterClass(alwaysRun = true, dependsOnMethods = {"stopRuns"})
     public void removeNodes() {
-        loginAsAdminAndPerform(() -> {
-            sleep(3, MINUTES);
-            super.removeNodes();
-        });
+        sleep(3, MINUTES);
+        super.removeNodes();
     }
 
     @Override
@@ -143,9 +141,7 @@ public class RoleModelTest
 
     @AfterClass(alwaysRun = true)
     public void fallBackToDefaultToolSettings() {
-        logoutIfNeeded();
-        loginAs(admin);
-        fallbackToToolDefaultState(registry, group, tool);
+        loginAsAdminAndPerform(() -> fallbackToToolDefaultState(registry, group, tool));
     }
 
     @Test(priority = 0, enabled = false)
@@ -340,17 +336,19 @@ public class RoleModelTest
     @Test(priority = 11)
     @TestCase({"EPMCMBIBPC-560"})
     public void rerunPipelineWithoutPermissionsForExecute() {
-        logoutIfNeeded();
-        loginAs(admin);
-        givePermissions(user,
-                PipelinePermission.deny(EXECUTE, pipelineName));
-        getPipelinePermissionsTab(pipelineName)
-                .selectByName(getUserNameByAccountLogin(user.login))
-                .showPermissions()
-                .validatePrivilegeValue(EXECUTE, DENY)
-                .validatePrivilegeValue(READ, ALLOW)
-                .closeAll();
-        logout();
+        loginAsAdminAndPerform(() -> {
+            givePermissions(user,
+                    PipelinePermission.deny(EXECUTE, pipelineName));
+            getPipelinePermissionsTab(pipelineName)
+                    .selectByName(getUserNameByAccountLogin(user.login))
+                    .showPermissions()
+                    .validatePrivilegeValue(EXECUTE, DENY)
+                    .validatePrivilegeValue(READ, ALLOW)
+                    .closeAll();
+            logout();
+        });
+
+        sleep(1, MINUTES);
 
         loginAs(user)
                 .library()

@@ -54,12 +54,10 @@ public class SshPermissionTest extends AbstractSeveralPipelineRunningTest implem
     }
 
     @Override
-    @AfterClass(alwaysRun = true)
+    @AfterClass(alwaysRun = true, dependsOnMethods = {"stopRuns"})
     public void removeNodes() {
-        loginAsAdminAndPerform(() -> {
-            sleep(6, MINUTES);
-            super.removeNodes();
-        });
+        sleep(6, MINUTES);
+        super.removeNodes();
     }
 
     @Override
