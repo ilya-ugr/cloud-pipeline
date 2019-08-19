@@ -4,9 +4,11 @@ import com.epam.pipeline.tesadapter.configuration.CustomConverter;
 import com.epam.pipeline.tesadapter.configuration.TesSwaggerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
+@ComponentScan("com.epam.pipeline.tesadapter.controller")
 @Import({TesSwaggerConfig.class, CustomConverter.class})
 public class TesAdapterApplication {
     public static void main(String[] args) {
