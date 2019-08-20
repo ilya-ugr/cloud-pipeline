@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 @ComponentScan("com.epam.pipeline.tesadapter.service")
 @Import({TesSwaggerConfig.class})
+@ComponentScan({"com.epam.pipeline.tesadapter.controller", "com.epam.pipeline.tesadapter.service"})
 public class TesAdapterApplication {
     public static void main(String[] args) {
         SpringApplication.run(TesAdapterApplication.class, args);
