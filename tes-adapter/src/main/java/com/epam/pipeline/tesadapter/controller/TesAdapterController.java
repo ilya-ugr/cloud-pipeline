@@ -1,5 +1,6 @@
 package com.epam.pipeline.tesadapter.controller;
 
+import com.epam.pipeline.tesadapter.entity.TesListTasksResponse;
 import com.epam.pipeline.tesadapter.service.TesTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,5 +21,10 @@ public class TesAdapterController {
     @GetMapping("/v1/tasks/service-info")
     public ResponseEntity<String> serviceInfo() {
         return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping("/v1/tasks")
+    public ResponseEntity<TesListTasksResponse> listTesTasks() {
+        return new ResponseEntity<>(tesTaskService.listTesTask(), HttpStatus.OK);
     }
 }
