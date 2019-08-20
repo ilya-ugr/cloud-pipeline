@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,7 +25,11 @@ public class TesAdapterController {
     }
 
     @GetMapping("/v1/tasks")
-    public ResponseEntity<TesListTasksResponse> listTesTasks() {
-        return new ResponseEntity<>(tesTaskService.listTesTask(), HttpStatus.OK);
+    public ResponseEntity<TesListTasksResponse> listTesTasks(@RequestParam("name_prefix") String name_prefix,
+                                                             @RequestParam("page_size") int page_size,
+                                                             @RequestParam("page_token") String page_token,
+                                                             @RequestParam("view") Enum view,
+                                                             @RequestParam(defaultValue = "MINIMAL") String defaultVal) {
+        return ResponseEntity.status(HttpStatus.OK).body(tesTaskService.listTesTask());
     }
 }
