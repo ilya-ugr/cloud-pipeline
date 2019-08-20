@@ -10,10 +10,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Collections;
 
 @Configuration
-public class CustomConverter implements WebMvcConfigurer{
+public class RestConfiguration implements WebMvcConfigurer {
 
     @Bean
-    public HttpMessageConverters customConverters(){
+    public HttpMessageConverters customConverters() {
         HttpMessageConverter<Object> addition = new MappingJackson2HttpMessageConverter();
         return new HttpMessageConverters(false, Collections.singletonList(addition));
     }
