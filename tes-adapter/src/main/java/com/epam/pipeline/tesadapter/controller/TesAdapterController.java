@@ -22,6 +22,7 @@ public class TesAdapterController {
 
     @GetMapping("/v1/tasks/service-info")
     public ResponseEntity<String> serviceInfo() {
+        tesTaskService.stub();
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 

@@ -10,4 +10,9 @@ public class TesTaskServiceImpl implements TesTaskService {
         TesListTasksResponse tesListTasksResponse = new TesListTasksResponse();
         return new TesListTasksResponse();
     }
+
+    @Override
+    public void stub() {
+        //stubbed method
+    }
 }
