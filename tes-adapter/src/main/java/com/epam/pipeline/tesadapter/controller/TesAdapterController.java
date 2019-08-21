@@ -1,6 +1,7 @@
 package com.epam.pipeline.tesadapter.controller;
 
 import com.epam.pipeline.tesadapter.entity.TesListTasksResponse;
+import com.epam.pipeline.tesadapter.model.TaskView;
 import com.epam.pipeline.tesadapter.service.TesTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,11 +26,11 @@ public class TesAdapterController {
     }
 
     @GetMapping("/v1/tasks")
-    public ResponseEntity<TesListTasksResponse> listTesTasks(@RequestParam("name_prefix") String name_prefix,
-                                                             @RequestParam("page_size") int page_size,
-                                                             @RequestParam("page_token") String page_token,
-                                                             @RequestParam("view") Enum view,
-                                                             @RequestParam(defaultValue = "MINIMAL") String defaultVal) {
+    public ResponseEntity<TesListTasksResponse> listTesTasks(@RequestParam(name = "name_prefix", required = false) String namePrefix,
+                                                             @RequestParam(name = "page_size", required = false) long pageSize,
+                                                             @RequestParam(name = "page_token", required = false) String pageToken,
+                                                             @RequestParam(name = "view", required = false, defaultValue = "MINIMAL")
+                                                                         TaskView view) {
         return ResponseEntity.status(HttpStatus.OK).body(tesTaskService.listTesTask());
     }
 }
