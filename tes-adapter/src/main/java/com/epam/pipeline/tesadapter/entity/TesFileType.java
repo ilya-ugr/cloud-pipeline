@@ -7,9 +7,7 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor
 public enum TesFileType {
-    FILE("FILE"),
-    DIRECTORY("DIRECTORY");
-
-    private String value;
+    FILE,
+    DIRECTORY;
 }
 

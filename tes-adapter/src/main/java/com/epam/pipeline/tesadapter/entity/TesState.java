@@ -24,16 +24,15 @@ import lombok.ToString;
 @ToString
 public enum TesState {
 
-    UNKNOWN("UNKNOWN"),
-    QUEUED("QUEUED"),
-    INITIALIZING("INITIALIZING"),
-    RUNNING("RUNNING"),
-    PAUSED("PAUSED"),
-    COMPLETE("COMPLETE"),
-    EXECUTOR_ERROR("EXECUTOR_ERROR"),
-    SYSTEM_ERROR("SYSTEM_ERROR"),
-    CANCELED("CANCELED");
+    UNKNOWN,
+    QUEUED,
+    INITIALIZING,
+    RUNNING,
+    PAUSED,
+    COMPLETE,
+    EXECUTOR_ERROR,
+    SYSTEM_ERROR,
+    CANCELED;
 
-    private String value;
 }
 
