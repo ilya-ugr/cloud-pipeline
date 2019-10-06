@@ -29,13 +29,16 @@ public class TesTokenInterceptor implements HandlerInterceptor {
     @Value("${cloud.pipeline.token}")
     private String defaultPipelineToken;
 
-    private final IpAddressMatcher ipAddressMatcher;
+    private final IpAddressMatcher ipAddressMatcherV4;
+    private final IpAddressMatcher ipAddressMatcherV6;
 
     @Autowired
     public TesTokenInterceptor(TesTokenHolder tesTokenHolder,
-                               @Value("${security.allowed.client.ip.range}") String ipRange) {
+                               @Value("${security.allowed.client.ipv4.range}") String ipRangeV4,
+                               @Value("${security.allowed.client.ipv6.range}") String ipRangeV6) {
         this.tesTokenHolder = tesTokenHolder;
-        ipAddressMatcher = StringUtils.isNotEmpty(ipRange) ? new IpAddressMatcher(ipRange) : null;
+        ipAddressMatcherV4 = StringUtils.isNotEmpty(ipRangeV4) ? new IpAddressMatcher(ipRangeV4) : null;
+        ipAddressMatcherV6 = StringUtils.isNotEmpty(ipRangeV6) ? new IpAddressMatcher(ipRangeV6) : null;
     }
 
     @Override
@@ -63,6 +66,7 @@ public class TesTokenInterceptor implements HandlerInterceptor {
     }
 
     private boolean checkClientHostAddress(HttpServletRequest request) {
-        return ipAddressMatcher != null && ipAddressMatcher.matches(request);
+        return (ipAddressMatcherV4 != null && ipAddressMatcherV4.matches(request)) ||
+                (ipAddressMatcherV6 != null && ipAddressMatcherV6.matches(request));
     }
 }
